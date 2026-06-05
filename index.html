@@ -188,12 +188,12 @@
                 onclick="prikaziInfo('Zadnje Krilo i DRS Sistem', 'Zadnje krilo balansira potisak zadnje osovine. Uključuje i DRS (Drag Reduction System) – hidraulični mehanizam koji otvara zakrilce na pravcima, čime se drastično smanjuje otpor vazduha i omogućava povećanje maksimalne brzine za oko 10–12 km/h radi lakšeg preticanja.', false)">
         </button>
 
-    </model-viewer>
+        <div id="info-panel" class="info-panel">
+            <h2 id="info-naslov">Komponenta</h2>
+            <p id="info-tekst">Opis.</p>
+        </div>
 
-    <div id="info-panel" class="info-panel">
-        <h2 id="info-naslov">Komponenta</h2>
-        <p id="info-tekst">Opis.</p>
-    </div>
+    </model-viewer>
 
     <script>
         function prikaziInfo(naslov, tekst, pustiZvuk) {
