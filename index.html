@@ -10,7 +10,7 @@
             --primary-color: #df0017;
             --bg-color: #0a0a0a;
             --text-color: #ececec;
-            --panel-bg: rgba(20, 20, 20, 0.85);
+            --panel-bg: rgba(20, 20, 20, 0.95);
         }
         * {
             box-sizing: border-box;
@@ -43,11 +43,10 @@
             border: 1px solid rgba(223, 0, 23, 0.3);
             text-align: center;
             backdrop-filter: blur(10px);
-            z-index: 10;
+            z-index: 9000;
             width: 90%;
             max-width: 450px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            pointer-events: none; /* Da ne smeta u AR-u */
         }
         .header-panel h1 {
             font-size: 18px;
@@ -58,7 +57,7 @@
         .header-panel h1 span { color: var(--primary-color); }
         .header-panel p {
             font-size: 11px;
-            color: #757575;
+            color: #b0b0b0;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-top: 4px;
@@ -72,12 +71,13 @@
             padding: 20px;
             border-radius: 12px;
             border-left: 4px solid var(--primary-color);
+            border-top: 1px solid rgba(255,255,255,0.1);
             width: 90%;
             max-width: 450px;
             backdrop-filter: blur(10px);
-            z-index: 9999; /* Osigurava da je uvek na vrhu, i u AR-u */
+            z-index: 9999 !important; /* Osigurava da panel iskače ispred svega u AR-u */
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             opacity: 0;
             pointer-events: none;
         }
@@ -87,25 +87,27 @@
             pointer-events: auto;
         }
         .info-panel h2 {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--primary-color);
             text-transform: uppercase;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
         }
         .info-panel p {
             font-size: 13px;
-            color: #c1c1c1;
-            line-height: 1.4;
+            color: #e0e0e0;
+            line-height: 1.5;
         }
         .hotspot {
-            width: 28px;
-            height: 28px;
+            width: 32px; /* Malo veća površina za lakši klik prstom na kameri */
+            height: 32px;
             border-radius: 50%;
             border: 2px solid white;
             background-color: var(--primary-color);
-            box-shadow: 0 0 15px var(--primary-color);
+            box-shadow: 0 0 12px var(--primary-color);
             cursor: pointer;
-            z-index: 9998;
+            z-index: 9500 !important;
+            pointer-events: auto !important; /* Forsira telefon da uvek registruje klik na tačku */
         }
         #ar-button {
             background-color: var(--primary-color);
@@ -129,47 +131,61 @@
 </head>
 <body>
 
-    <!-- Audio element za zvuk motora -->
     <audio id="f1-zvuk" src="motor.mp3" preload="auto"></audio>
 
     <div class="header-panel">
-        <h1>F1 - 2026 <span>Showcase</span></h1>
-        <p>Multimedijalni Projekat • Dodirni tačke</p>
+        <h1>F1 - Interaktivni AR <span>Projekat</span></h1>
+        <p>Ispitni Rad iz Elektronskog Biznisa</p>
     </div>
 
-    <!-- VAŽNO: ar-modes je podešen da forsira webxr u kojem rade HTML elementi -->
+    <!-- ar-modes je podešen da forsira webxr na prvom mestu jer ti on radi -->
     <model-viewer 
         src="bolid.glb" 
         ar 
-        ar-modes="webxr" 
+        ar-modes="webxr scene-viewer quick-look" 
+        ar-placement="floor"
         camera-controls 
         interaction-prompt="auto"
         shadow-intensity="1.5" 
         environment-image="neutral">
         
         <button slot="ar-button" id="ar-button">
-            🤖 POKRENI AR ISKUSTVO
+            🏎️ POKRENI INTERAKTIVNI AR
         </button>
 
-        <!-- Hotspot Aero -->
+        <!-- 1. PREDNJE KRILO (Pomereno malo naviše i napred da ne upada u pod/model) -->
         <button class="hotspot" slot="hotspot-aero" 
-                data-position="0m 0.3m 2.1m" 
+                data-position="0m 0.35m 2.2m" 
                 data-normal="0m 1m 0m" 
-                onclick="prikaziInfo('Aerodinamika', 'Prednje krilo generiše downforce i usmerava vazduh oko točkova.', false)">
+                onclick="prikaziInfo('Prednja Aerodinamika (Front Wing)', 'Prednje krilo je ključni element za usmeravanje vazdušne struje. Ono generiše primarni aerodinamički potisak (downforce) koji lepi prednji deo bolida za stazu, omogućavajući maksimalnu stabilnost i brzinu pri ulaženju u oštre krivine.', false)">
         </button>
 
-        <!-- Hotspot Motor (ovde palimo zvuk sa "true") -->
+        <!-- 2. HIBRIDNI MOTOR (Provereno radi) -->
         <button class="hotspot" slot="hotspot-motor" 
-                data-position="0m 0.8m -0.8m" 
+                data-position="0m 0.85m -0.8m" 
                 data-normal="0m 1m 0m" 
-                onclick="prikaziInfo('Pogonska Jedinica', 'Hibridni V6 turbo motor sa preko 1000 KS. Slušaj taj zvuk!', true)">
+                onclick="prikaziInfo('Pogonska Jedinica (V6 Turbo Hybrid)', 'Srce bolida čini visokorazvijeni 1.6-litarski V6 turbo hibridni motor. Kombinuje klasično unutrašnje sagorevanje sa naprednim sistemima za regeneraciju kinetičke i toplotne energije (MGU-K i MGU-H), isporučujući snagu od preko 1000 konjskih snaga.', true)">
         </button>
 
-        <!-- Hotspot Gume -->
+        <!-- 3. PNEUMATICI (Izvučeno bočno malo više udesno da bude pristupačno) -->
         <button class="hotspot" slot="hotspot-gume" 
-                data-position="0.8m 0.4m 1.4m" 
+                data-position="0.95m 0.4m 1.4m" 
                 data-normal="1m 0m 0m" 
-                onclick="prikaziInfo('Pneumatici', 'Soft komponenta guma za maksimalno prijanjanje na stazi.', false)">
+                onclick="prikaziInfo('Pneumatici i Vešanje (Slick Tyres)', 'Trkačke gume bez šara (Slick) projektovane su za maksimalnu kontaktnu površinu i hemijsko prijanjanje sa asfaltom. Uparene su sa kompleksnim sistemom vešanja koji trpi opterećenja bočnih sila većih od 5G tokom trke.', false)">
+        </button>
+
+        <!-- 4. HALO SISTEM (Podignuto malo iznad kokpita) -->
+        <button class="hotspot" slot="hotspot-halo" 
+                data-position="0m 1.05m 0.3m" 
+                data-normal="0m 1m 0m" 
+                onclick="prikaziInfo('HALO Sigurnosni Sistem', 'Titanijumska struktura težine svega 9 kg koja okružuje kokpit vozača. Konstruisana je sa ciljem da izdrži statičko opterećenje od čak 12 tona (težinu autobusa na sprat) kako bi zaštitila glavu vozača od letećih krhotina i teških incidenata na stazi.', false)">
+        </button>
+
+        <!-- 5. ZADNJE KRILO (Podignuto i izvučeno skroz nazad) -->
+        <button class="hotspot" slot="hotspot-zadnje" 
+                data-position="0m 1.3m -2.0m" 
+                data-normal="0m 1m 0m" 
+                onclick="prikaziInfo('Zadnje Krilo i DRS Sistem', 'Zadnje krilo balansira potisak zadnje osovine. Uključuje i DRS (Drag Reduction System) – hidraulični mehanizam koji otvara zakrilce na pravcima, čime se drastično smanjuje otpor vazduha i omogućava povećanje maksimalne brzine za oko 10–12 km/h radi lakšeg preticanja.', false)">
         </button>
 
     </model-viewer>
@@ -190,18 +206,18 @@
             tekstElement.innerText = tekst;
             panel.classList.add('active');
 
-            // Ako je kliknut motor, pusti zvuk ispočetka
             if (pustiZvuk) {
                 audio.currentTime = 0;
-                audio.play().catch(e => console.log("Audio blokiran dok ne tapneš ekran:", e));
+                audio.play().catch(e => console.log("Audio block:", e));
             }
 
             clearTimeout(window.panelTimeout);
             window.panelTimeout = setTimeout(() => {
                 panel.classList.remove('active');
-            }, 8000);
+            }, 9000); // 9 sekundi traje prikaz
         }
 
+        // Zatvaranje panela ako se klikne bilo gde van hotspotova
         document.querySelector('model-viewer').addEventListener('click', (e) => {
             if (!e.target.classList.contains('hotspot')) {
                 document.getElementById('info-panel').classList.remove('active');
