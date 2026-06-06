@@ -75,7 +75,7 @@
             width: 90%;
             max-width: 450px;
             backdrop-filter: blur(10px);
-            z-index: 9999 !important; /* Osigurava da panel iskače ispred svega u AR-u */
+            z-index: 9999 !important; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             transition: all 0.2s ease;
             opacity: 0;
@@ -99,7 +99,7 @@
             line-height: 1.5;
         }
         .hotspot {
-            width: 32px; /* Malo veća površina za lakši klik prstom na kameri */
+            width: 32px; 
             height: 32px;
             border-radius: 50%;
             border: 2px solid white;
@@ -138,7 +138,7 @@
         <p>Istraživanje i razvoj multimedijalnog sadržaja</p>
     </div>
 
-    <!-- ar-modes je podešen da forsira webxr na prvom mestu jer ti on radi -->
+    
     <model-viewer 
         src="bolid.glb" 
         ar 
@@ -153,35 +153,35 @@
             🏎️ POKRENI INTERAKTIVNI AR
         </button>
 
-        <!-- 1. PREDNJE KRILO (Pomereno malo naviše i napred da ne upada u pod/model) -->
+        
         <button class="hotspot" slot="hotspot-aero" 
                 data-position="0m 0.35m 2.2m" 
                 data-normal="0m 1m 0m" 
                 onclick="prikaziInfo('Prednja Aerodinamika (Front Wing)', 'Prednje krilo je ključni element za usmeravanje vazdušne struje. Ono generiše primarni aerodinamički potisak (downforce) koji lepi prednji deo bolida za stazu, omogućavajući maksimalnu stabilnost i brzinu pri ulaženju u oštre krivine.', false)">
         </button>
 
-        <!-- 2. HIBRIDNI MOTOR (Provereno radi) -->
+       
         <button class="hotspot" slot="hotspot-motor" 
                 data-position="0m 0.85m -0.8m" 
                 data-normal="0m 1m 0m" 
                 onclick="prikaziInfo('Pogonska Jedinica (V6 Turbo Hybrid)', 'Srce bolida čini visokorazvijeni 1.6-litarski V6 turbo hibridni motor. Kombinuje klasično unutrašnje sagorevanje sa naprednim sistemima za regeneraciju kinetičke i toplotne energije (MGU-K i MGU-H), isporučujući snagu od preko 1000 konjskih snaga.', true)">
         </button>
 
-        <!-- 3. PNEUMATICI (Izvučeno bočno malo više udesno da bude pristupačno) -->
+        
         <button class="hotspot" slot="hotspot-gume" 
                 data-position="0.95m 0.4m 1.4m" 
                 data-normal="1m 0m 0m" 
                 onclick="prikaziInfo('Pneumatici i Vešanje (Slick Tyres)', 'Trkačke gume bez šara (Slick) projektovane su za maksimalnu kontaktnu površinu i hemijsko prijanjanje sa asfaltom. Uparene su sa kompleksnim sistemom vešanja koji trpi opterećenja bočnih sila većih od 5G tokom trke.', false)">
         </button>
 
-        <!-- 4. HALO SISTEM (Podignuto malo iznad kokpita) -->
+        
         <button class="hotspot" slot="hotspot-halo" 
                 data-position="0m 1.05m 0.3m" 
                 data-normal="0m 1m 0m" 
                 onclick="prikaziInfo('HALO Sigurnosni Sistem', 'Titanijumska struktura težine svega 9 kg koja okružuje kokpit vozača. Konstruisana je sa ciljem da izdrži statičko opterećenje od čak 12 tona (težinu autobusa na sprat) kako bi zaštitila glavu vozača od letećih krhotina i teških incidenata na stazi.', false)">
         </button>
 
-        <!-- 5. ZADNJE KRILO (Podignuto i izvučeno skroz nazad) -->
+        
         <button class="hotspot" slot="hotspot-zadnje" 
                 data-position="0m 1.3m -2.0m" 
                 data-normal="0m 1m 0m" 
@@ -214,10 +214,10 @@
             clearTimeout(window.panelTimeout);
             window.panelTimeout = setTimeout(() => {
                 panel.classList.remove('active');
-            }, 9000); // 9 sekundi traje prikaz
+            }, 18000); 
         }
 
-        // Zatvaranje panela ako se klikne bilo gde van hotspotova
+      
         document.querySelector('model-viewer').addEventListener('click', (e) => {
             if (!e.target.classList.contains('hotspot')) {
                 document.getElementById('info-panel').classList.remove('active');
